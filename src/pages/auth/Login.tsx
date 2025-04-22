@@ -15,7 +15,7 @@ const Login = () => {
         <div className="w-full max-w-md px-4">
           <div className="text-center mb-6">
             <Shield className="h-12 w-12 text-wsms-primary mx-auto" />
-            <h1 className="text-2xl font-bold mt-2">EmpowerShield</h1>
+            <h1 className="text-2xl font-bold mt-2">Rakshak-WomenSafety</h1>
           </div>
           
           <Card>

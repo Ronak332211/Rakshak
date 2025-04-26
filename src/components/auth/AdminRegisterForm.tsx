@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -7,8 +7,8 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 
-const RegisterForm = () => {
-  const { registerUser } = useAuth();
+const AdminRegisterForm = () => {
+  const { registerAdmin, isFirstAdminRegistered } = useAuth();
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -16,10 +16,16 @@ const RegisterForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
   });
   
   const [isLoading, setIsLoading] = useState(false);
+  
+  // If admin is already registered, redirect to login
+  useEffect(() => {
+    if (isFirstAdminRegistered) {
+      navigate('/admin/login');
+    }
+  }, [isFirstAdminRegistered, navigate]);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -42,19 +48,19 @@ const RegisterForm = () => {
     }
     
     try {
-      const success = await registerUser(formData.name, formData.email, formData.password);
+      const success = await registerAdmin(formData.name, formData.email, formData.password);
       
       if (success) {
         toast({
-          title: "Registration successful!",
-          description: "Your account has been created.",
+          title: "Admin Registration successful!",
+          description: "Your admin account has been created.",
           variant: "default",
         });
-        navigate('/dashboard');
+        navigate('/admin/dashboard');
       } else {
         toast({
           title: "Registration failed",
-          description: "Unable to create your account. Please try again.",
+          description: "Unable to create admin account. An admin may already be registered.",
           variant: "destructive",
         });
       }
@@ -72,13 +78,19 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
+        <p className="text-sm text-blue-800">
+          You are registering as the first administrator of the system. Only one admin account can be created.
+        </p>
+      </div>
+      
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
         <Input 
           id="name" 
           name="name"
           type="text" 
-          placeholder="Jane Doe" 
+          placeholder="Admin Name" 
           value={formData.name}
           onChange={handleChange}
           required
@@ -91,21 +103,8 @@ const RegisterForm = () => {
           id="email" 
           name="email"
           type="email" 
-          placeholder="jane.doe@example.com" 
+          placeholder="admin@example.com" 
           value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="phone">Phone Number</Label>
-        <Input 
-          id="phone" 
-          name="phone"
-          type="tel" 
-          placeholder="123-456-7890" 
-          value={formData.phone}
           onChange={handleChange}
           required
         />
@@ -141,31 +140,18 @@ const RegisterForm = () => {
       <div className="pt-2">
         <Button type="submit" className="w-full bg-wsms-primary hover:bg-wsms-primary-dark" disabled={isLoading}>
           {isLoading ? (
-            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...</>
+            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating admin account...</>
           ) : (
-            'Create account'
+            'Create admin account'
           )}
         </Button>
       </div>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Already have an account?{' '}
-          <a href="/login" className="text-wsms-primary hover:underline">
-            Sign in
-          </a>
-        </p>
-      </div>
-      
-      <div className="text-center mt-4">
-        <p className="text-sm text-gray-600">
-          Register as:{' '}
-          <a href="/police/register" className="text-wsms-primary hover:underline">
-            Police Officer
-          </a>
-          {' | '}
-          <a href="/admin/register" className="text-wsms-primary hover:underline">
-            Admin
+          Already registered as admin?{' '}
+          <a href="/admin/login" className="text-wsms-primary hover:underline">
+            Sign in as Admin
           </a>
         </p>
       </div>
@@ -173,4 +159,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default AdminRegisterForm; 

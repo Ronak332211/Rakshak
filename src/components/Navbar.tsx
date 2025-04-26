@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'react-router-dom';
@@ -19,7 +18,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-2">
             <Shield className="h-6 w-6" />
-            <Link to="/" className="text-xl font-bold">EmpowerShield</Link>
+            <Link to="/" className="text-xl font-bold">Rakshak-Women Safety</Link>
           </div>
 
           {/* Desktop Navigation */}

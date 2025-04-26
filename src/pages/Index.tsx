@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Shield, FileText, UserCircle, PhoneCall, Clock, Lock } from 'lucide-react';
+import { Shield, FileText, UserCircle, PhoneCall, Clock, Lock, Users, UserCog } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
@@ -40,7 +39,7 @@ const Index = () => {
               <Shield className="h-16 w-16 text-wsms-primary" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Women Security Management System
+              Rakshak-Women Safety
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-600">
               A secure platform where women can report incidents, track complaint status, and stay connected with authorities.
@@ -61,6 +60,92 @@ const Index = () => {
               >
                 Learn More
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Portal Selection Section */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">Choose Your Portal</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* User Portal */}
+              <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-wsms-primary flex flex-col">
+                <div className="bg-wsms-secondary/50 w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                  <UserCircle className="h-7 w-7 text-wsms-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">User Portal</h3>
+                <p className="text-gray-600 mb-6 flex-grow">
+                  Register or login as a user to file complaints, add emergency contacts, and access safety resources.
+                </p>
+                <div className="flex gap-2 mt-auto">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 border-wsms-primary text-wsms-primary"
+                    onClick={() => navigate('/register')}
+                  >
+                    Register
+                  </Button>
+                  <Button 
+                    className="flex-1 bg-wsms-primary"
+                    onClick={() => navigate('/login')}
+                  >
+                    Login
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Police Portal */}
+              <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-blue-600 flex flex-col">
+                <div className="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                  <Shield className="h-7 w-7 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Police Portal</h3>
+                <p className="text-gray-600 mb-6 flex-grow">
+                  For authorized police officers to manage and respond to complaints and emergency alerts.
+                </p>
+                <div className="flex gap-2 mt-auto">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 border-blue-600 text-blue-600"
+                    onClick={() => navigate('/police/register')}
+                  >
+                    Register
+                  </Button>
+                  <Button 
+                    className="flex-1 bg-blue-600"
+                    onClick={() => navigate('/police/login')}
+                  >
+                    Login
+                  </Button>
+                </div>
+              </div>
+              
+              {/* Admin Portal */}
+              <div className="bg-white p-6 rounded-lg shadow-md border-t-4 border-purple-600 flex flex-col">
+                <div className="bg-purple-100 w-14 h-14 rounded-full flex items-center justify-center mb-4">
+                  <UserCog className="h-7 w-7 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-semibold mb-3">Admin Portal</h3>
+                <p className="text-gray-600 mb-6 flex-grow">
+                  System administration for managing users, police officers, and overseeing the entire platform.
+                </p>
+                <div className="flex gap-2 mt-auto">
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 border-purple-600 text-purple-600"
+                    onClick={() => navigate('/admin/register')}
+                  >
+                    Register
+                  </Button>
+                  <Button 
+                    className="flex-1 bg-purple-600"
+                    onClick={() => navigate('/admin/login')}
+                  >
+                    Login
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>

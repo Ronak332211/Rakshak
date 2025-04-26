@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 
-const LoginForm = () => {
+const PoliceLoginForm = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   
@@ -20,20 +20,20 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
-      const success = await login(email, password, 'user');
+      const success = await login(email, password, 'police');
       
       if (success) {
         toast({
           title: "Success!",
-          description: "You've been logged in successfully.",
+          description: "You've been logged in as a Police Officer successfully.",
           variant: "default",
         });
         
-        navigate('/dashboard');
+        navigate('/police/dashboard');
       } else {
         toast({
           title: "Login failed",
-          description: "Invalid credentials. Please try again.",
+          description: "Invalid police credentials. Please try again.",
           variant: "destructive",
         });
       }
@@ -56,7 +56,7 @@ const LoginForm = () => {
         <Input 
           id="email" 
           type="email" 
-          placeholder="email@example.com" 
+          placeholder="officer@police.gov" 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -74,39 +74,33 @@ const LoginForm = () => {
           required
         />
       </div>
-
-      <div className="flex items-center justify-between">
-        <a href="#" className="text-sm text-wsms-primary hover:underline">
-          Forgot password?
-        </a>
-      </div>
       
       <Button type="submit" className="w-full bg-wsms-primary hover:bg-wsms-primary-dark" disabled={isLoading}>
         {isLoading ? (
           <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...</>
         ) : (
-          'Sign in'
+          'Sign in as Police Officer'
         )}
       </Button>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Don't have an account?{' '}
-          <a href="/register" className="text-wsms-primary hover:underline">
-            Register now
+          Don't have a police account?{' '}
+          <a href="/police/register" className="text-wsms-primary hover:underline">
+            Register here
           </a>
         </p>
       </div>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Log in as:{' '}
-          <a href="/police/login" className="text-wsms-primary hover:underline">
-            Police Officer
+          Not a police officer?{' '}
+          <a href="/login" className="text-wsms-primary hover:underline">
+            User Login
           </a>
           {' | '}
           <a href="/admin/login" className="text-wsms-primary hover:underline">
-            Admin
+            Admin Login
           </a>
         </p>
       </div>
@@ -115,11 +109,11 @@ const LoginForm = () => {
       <div className="mt-8 p-4 bg-gray-50 rounded-md">
         <h4 className="text-sm font-medium text-gray-500 mb-2">Demo Credentials</h4>
         <div className="text-xs text-gray-500">
-          <p><strong>User:</strong> user@example.com / user123</p>
+          <p><strong>Police:</strong> police@example.com / police123</p>
         </div>
       </div>
     </form>
   );
 };
 
-export default LoginForm;
+export default PoliceLoginForm; 

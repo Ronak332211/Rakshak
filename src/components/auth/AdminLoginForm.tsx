@@ -7,8 +7,8 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 
-const LoginForm = () => {
-  const { login } = useAuth();
+const AdminLoginForm = () => {
+  const { login, isFirstAdminRegistered } = useAuth();
   const navigate = useNavigate();
   
   const [email, setEmail] = useState('');
@@ -20,20 +20,20 @@ const LoginForm = () => {
     setIsLoading(true);
     
     try {
-      const success = await login(email, password, 'user');
+      const success = await login(email, password, 'admin');
       
       if (success) {
         toast({
           title: "Success!",
-          description: "You've been logged in successfully.",
+          description: "You've been logged in as Admin successfully.",
           variant: "default",
         });
         
-        navigate('/dashboard');
+        navigate('/admin/dashboard');
       } else {
         toast({
           title: "Login failed",
-          description: "Invalid credentials. Please try again.",
+          description: "Invalid admin credentials. Please try again.",
           variant: "destructive",
         });
       }
@@ -51,12 +51,27 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {!isFirstAdminRegistered && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-md p-3 mb-4">
+          <p className="text-sm text-yellow-800">
+            No admin account has been registered yet. Please register as the first admin.
+          </p>
+          <Button 
+            variant="link" 
+            className="text-yellow-800 p-0 h-auto font-semibold" 
+            onClick={() => navigate('/admin/register')}
+          >
+            Register as Admin
+          </Button>
+        </div>
+      )}
+      
       <div className="space-y-3">
         <Label htmlFor="email">Email</Label>
         <Input 
           id="email" 
           type="email" 
-          placeholder="email@example.com" 
+          placeholder="admin@example.com" 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -74,52 +89,29 @@ const LoginForm = () => {
           required
         />
       </div>
-
-      <div className="flex items-center justify-between">
-        <a href="#" className="text-sm text-wsms-primary hover:underline">
-          Forgot password?
-        </a>
-      </div>
       
       <Button type="submit" className="w-full bg-wsms-primary hover:bg-wsms-primary-dark" disabled={isLoading}>
         {isLoading ? (
           <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...</>
         ) : (
-          'Sign in'
+          'Sign in as Admin'
         )}
       </Button>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Don't have an account?{' '}
-          <a href="/register" className="text-wsms-primary hover:underline">
-            Register now
-          </a>
-        </p>
-      </div>
-      
-      <div className="text-center mt-4">
-        <p className="text-sm text-gray-600">
-          Log in as:{' '}
-          <a href="/police/login" className="text-wsms-primary hover:underline">
-            Police Officer
+          Not an admin?{' '}
+          <a href="/login" className="text-wsms-primary hover:underline">
+            User Login
           </a>
           {' | '}
-          <a href="/admin/login" className="text-wsms-primary hover:underline">
-            Admin
+          <a href="/police/login" className="text-wsms-primary hover:underline">
+            Police Login
           </a>
         </p>
-      </div>
-      
-      {/* Demo Credentials */}
-      <div className="mt-8 p-4 bg-gray-50 rounded-md">
-        <h4 className="text-sm font-medium text-gray-500 mb-2">Demo Credentials</h4>
-        <div className="text-xs text-gray-500">
-          <p><strong>User:</strong> user@example.com / user123</p>
-        </div>
       </div>
     </form>
   );
 };
 
-export default LoginForm;
+export default AdminLoginForm; 

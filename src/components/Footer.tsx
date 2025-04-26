@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Shield, Phone, Mail, MapPin } from 'lucide-react';
 
@@ -11,7 +10,7 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Shield className="h-6 w-6 text-wsms-primary" />
-              <h3 className="text-xl font-bold">EmpowerShield</h3>
+              <h3 className="text-xl font-bold">Rakshak-Women Safety</h3>
             </div>
             <p className="text-gray-400 mb-4">
               A secure platform designed to empower women with tools for filing complaints, 
@@ -72,7 +71,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-wsms-primary flex-shrink-0" />
-                <span className="text-gray-400">contact@empowershield.com</span>
+                <span className="text-gray-400">contact@rakshak-women-safety.com</span>
               </li>
             </ul>
           </div>
@@ -80,7 +79,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-6">
           <p className="text-center text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} EmpowerShield. All rights reserved.
+            &copy; {new Date().getFullYear()} Rakshak-Women Safety. All rights reserved.
           </p>
         </div>
       </div>

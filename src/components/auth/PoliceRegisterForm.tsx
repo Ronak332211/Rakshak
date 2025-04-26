@@ -7,8 +7,8 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
 
-const RegisterForm = () => {
-  const { registerUser } = useAuth();
+const PoliceRegisterForm = () => {
+  const { registerPolice } = useAuth();
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ const RegisterForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
+    badgeId: '',
   });
   
   const [isLoading, setIsLoading] = useState(false);
@@ -42,19 +42,24 @@ const RegisterForm = () => {
     }
     
     try {
-      const success = await registerUser(formData.name, formData.email, formData.password);
+      const success = await registerPolice(
+        formData.name, 
+        formData.email, 
+        formData.password, 
+        formData.badgeId
+      );
       
       if (success) {
         toast({
           title: "Registration successful!",
-          description: "Your account has been created.",
+          description: "Your police account has been created.",
           variant: "default",
         });
-        navigate('/dashboard');
+        navigate('/police/dashboard');
       } else {
         toast({
           title: "Registration failed",
-          description: "Unable to create your account. Please try again.",
+          description: "Unable to create your police account. Your badge ID may not be approved by the admin.",
           variant: "destructive",
         });
       }
@@ -72,13 +77,19 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mb-4">
+        <p className="text-sm text-blue-800">
+          Registration requires a valid police badge ID that has been pre-approved by the system administrator.
+        </p>
+      </div>
+      
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
         <Input 
           id="name" 
           name="name"
           type="text" 
-          placeholder="Jane Doe" 
+          placeholder="Officer Name" 
           value={formData.name}
           onChange={handleChange}
           required
@@ -91,7 +102,7 @@ const RegisterForm = () => {
           id="email" 
           name="email"
           type="email" 
-          placeholder="jane.doe@example.com" 
+          placeholder="officer@police.gov" 
           value={formData.email}
           onChange={handleChange}
           required
@@ -99,13 +110,13 @@ const RegisterForm = () => {
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="phone">Phone Number</Label>
+        <Label htmlFor="badgeId">Badge ID</Label>
         <Input 
-          id="phone" 
-          name="phone"
-          type="tel" 
-          placeholder="123-456-7890" 
-          value={formData.phone}
+          id="badgeId" 
+          name="badgeId"
+          type="text" 
+          placeholder="PD12345" 
+          value={formData.badgeId}
           onChange={handleChange}
           required
         />
@@ -141,36 +152,29 @@ const RegisterForm = () => {
       <div className="pt-2">
         <Button type="submit" className="w-full bg-wsms-primary hover:bg-wsms-primary-dark" disabled={isLoading}>
           {isLoading ? (
-            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...</>
+            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating police account...</>
           ) : (
-            'Create account'
+            'Create police account'
           )}
         </Button>
       </div>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Already have an account?{' '}
-          <a href="/login" className="text-wsms-primary hover:underline">
-            Sign in
+          Already have a police account?{' '}
+          <a href="/police/login" className="text-wsms-primary hover:underline">
+            Sign in here
           </a>
         </p>
       </div>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Register as:{' '}
-          <a href="/police/register" className="text-wsms-primary hover:underline">
-            Police Officer
-          </a>
-          {' | '}
-          <a href="/admin/register" className="text-wsms-primary hover:underline">
-            Admin
-          </a>
+          For testing purposes, use badge ID: "PD12345" (this would normally be pre-approved by the admin)
         </p>
       </div>
     </form>
   );
 };
 
-export default RegisterForm;
+export default PoliceRegisterForm; 

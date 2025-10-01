@@ -4,7 +4,7 @@ A comprehensive platform for women's safety that allows users to file complaints
 
 ## Project Structure
 
-This project consists of two main parts:
+This project consists of two main parts..
 
 1. **Frontend**: A React application built with TypeScript, TailwindCSS, and Shadcn UI
 2. **Backend**: A Node.js API server with Express, MongoDB, and JWT authentication
